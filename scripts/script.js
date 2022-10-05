@@ -36,6 +36,20 @@ function initMap() {
 }
 
 
+function zoomListen(){
+
+}
+google.maps.event.addListener(map, "zoom_changed", function(){
+  var zoom = map.getZoom();
+  markerWidth = (zoom / 9) * 20;
+  markerHeight = (zoom / 9) * 34;
+  marker.setIcon({
+    url: icon,
+    scaledSize: new google.maps.Size(markerWidth, markerHeight)
+  })
+});
+google.maps.event.addDomListener(window, "load", initialize);
+
 
 // https://developers.google.com/maps/documentation/javascript
 // https://support.google.com/mymaps/answer/3024454?hl=en&co=GENIE.Platform%3DDesktop#:~:text=Create%20a%20map,map%20a%20name%20and%20description.
