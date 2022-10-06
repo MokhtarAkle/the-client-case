@@ -14,25 +14,38 @@
     </header>
 
     <main>
-        <div id="map"></div>
-        <div id="side-wrapper">
-            <ul>
-                <li><button>Sorteer</button></li>
-                <li><button>Filter</button></li>
-                <li><p></p><button>Selecteer</button></li>
-                <li><p></p><button>Selecteer</button></li>
-                <li><p></p><button>Selecteer</button></li>
-                <li><p></p><button>Selecteer</button></li>
-                <li><p></p><button>Selecteer</button></li>
-                <li><p></p><button>Selecteer</button></li>
-                <li><p></p><button>Selecteer</button></li>
-            </ul>
-            <button></button>
+        <div id="big-wrapper">
+            <div id="map"></div>
+            <div id="side-wrapper">
+                <ul>
+                    <li><button>Sorteer</button></li>
+                    <li><button>Filter</button></li>
+                    <li><p>Smartzone: "Tijn"</p>
+                        <p>Locatie: Twijnstraat 26, Utrecht</p>
+                        <p>Functie: "Parkeren "</p>
+                        <p>Grootte: 1,5 plek</p>
+                        <p>Gebruik: <span class="mediumFill">48%</span></p>
+                        <button class="selectButton">Selecteer</button>
+                        </li>
+                    <li><p>Smartzone: "Sarah"</p>
+                        <p>Locatie: Twijnstraat 22, Utrecht</p>
+                        <p>Functie: "Laden en Lossen"</p>
+                        <p>Grootte: 1,5 plek</p>
+                        <p>Gebruik: <span class="highFill">90%</span></p>
+                        <button>Selecteer</button>
+                    </li>
+                    <li><p></p><button>Selecteer</button></li>
+                    <li><p></p><button>Selecteer</button></li>
+                    <li><p></p><button>Selecteer</button></li>
+                    <li><p></p><button>Selecteer</button></li>
+                    <li><p></p><button>Selecteer</button></li>
+                </ul>
+                <button></button>
+            </div>
         </div>
-
     </main>
     <script type="text/javascript" src="./scripts/script.js"></script>
-    <script src="./smart-zones.json"></script>
+    <script src="./smartzones.json"></script>
     <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbdCeqaJpolGUNuwpKjaDlYOtUUsYkf5w&callback=initMap"></script>
 </body>
 </html>

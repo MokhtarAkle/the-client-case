@@ -1,5 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
 
 #map{
-    width: 30em;
-    height: 20em;
+    width: 50em;
+    height: 40em;
+}
+
+#big-wrapper{
+    position: relative;
+}
+#side-wrapper > ul{
+    display: flex;
+    flex-flow: column wrap;
+    max-width: 20em;
+    width: 20em;
+    background-color: #4F52C9;
+    color: white;
+    position: absolute;
+    top: 0;
+    padding: 1em;
+}
+
+li{
+    position: relative;
+    list-style-type: none;
+    
+}
+
+li> p{
+    font-family: 'Roboto', sans-serif;
+    
+}
+
+
+li> button{
+    position: absolute;
+    top: 50%;
+    left: 75%;
+}
+
+li> p:nth-of-type(1){
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 22px;
+}
+
+.lowFill{
+
+}
+
+.mediumFill{
+    color: orange;
+}
+
+.highFill{
+    color: red;
 }
