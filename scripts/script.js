@@ -1,5 +1,6 @@
 let map;
 const school = { lat: 52.36252576834291, lng: 4.9149200247251414 }; 
+var jsonTest = JSON.parse(smartzones);
 
 
 
