@@ -5,6 +5,7 @@ const school = { lat: 52.083004469900835, lng: 5.123430702685763};
 console.log(parseFloat(latitudes[1]));
 
 var buttonSelect = document.querySelector(".selectButton");
+var buttonList = document.querySelectorAll(".selectButton");
 
 // 52.36240661505912 4.915144607789511
 
@@ -83,26 +84,22 @@ const zoneData = [
           infoWindow.close();
           infoWindow.setContent(marker.getTitle());
           infoWindow.open(marker.getMap(), marker);
-          
         });
         
-
-
-        
-      }
-  
-      
+      }   
   }
   
+function buttonSwitch(){
+  for (let i = 0; i < buttonList.length; i++){
+        buttonList[i].addEventListener("click", () =>{
+          map.setCenter(new google.maps.LatLng(zoneData[i][1], zoneData[i][2]));
+          map.setZoom(18);
+        });
 
-
-
+}
+}
+buttonSwitch();
 window.initMap = initMap;
-
-buttonSelect.addEventListener("click", () =>{
-  map.setCenter(new google.maps.LatLng(zoneData[0][1], zoneData[0][2]));
-  map.setZoom(18);
-});
 
 // https://developers.google.com/maps/documentation/javascript
 // https://support.google.com/mymaps/answer/3024454?hl=en&co=GENIE.Platform%3DDesktop#:~:text=Create%20a%20map,map%20a%20name%20and%20description.
