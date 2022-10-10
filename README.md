@@ -1,4 +1,13 @@
-> _Fork_ deze leertaak en ga aan de slag. Onderstaande outline ga je gedurende deze taak in jouw eigen GitHub omgeving uitwerken. De instructie vind je, zoals altijd, in: [docs/INSTRUCTIONS.md](docs/INSTRUCTIONS.md)
+To-Do:
+Filter en Sorteer button positie + functionaliteit.
+zoek functionaliteit header
+filter functionaliteit maps
+layout maps buttons aanpassen
+media queries voor mobiel
+mobiele header en infowindows
+shortened borders > p
+nog een check op highlighted zones grootte en zoom
+final check up en algemene styling
 
 # Titel
 <!-- Geef je project een titel en schrijf in één zin wat het is -->
