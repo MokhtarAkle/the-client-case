@@ -1,18 +1,8 @@
 let map;
-const latitudes = ["52.083004469900835", "52.08321101672864", "51.91474369232434"];
-const longitudes = ["5.123430702685763", "5.123452160356139", "4.398259534097798"]
-const school = { lat: 52.083004469900835, lng: 5.123430702685763}; 
-console.log(parseFloat(latitudes[1]));
-
 var buttonSelect = document.querySelector(".selectButton");
 var buttonList = document.querySelectorAll(".selectButton");
-
-// 52.36240661505912 4.915144607789511
-
-// fetch('./smartzones.json')
-//   .then((response) => response.json())
-//   .then((data) => console.log(data));
-
+var buttonSlide = document.querySelector("#side-out");
+var listAnimation = document.querySelector("#side-wrapper");
 
 var myStyles =[
   {
@@ -26,7 +16,7 @@ var myStyles =[
 
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
-    center: school,
+    center: { lat: 52.083004469900835, lng: 5.123430702685763},
     zoom: 18,
     minZoom: 10,
     styles: myStyles,
@@ -53,7 +43,7 @@ const zoneData = [
   ["Witte de Withstraat 32", 51.915771960203756, 4.478053167399616],
 ];
 
-  function setMarkers(map){
+function setMarkers(map){
     
     const svgMarker = {
       // path: "M 63.00,16.00 C 63.00,16.00 63.00,49.00 63.00,49.00M 61.00,12.00 C 61.00,12.00 63.00,12.00 63.00,12.00 63.00,12.00 63.00,14.00 63.00,14.00M 5.00,12.00 C 5.00,12.00 60.00,12.00 60.00,12.00M 1.00,14.00 C 1.00,14.00 1.00,12.00 1.00,12.00 1.00,12.00 3.00,12.00 3.00,12.00M 1.00,48.00 C 1.00,48.00 1.00,15.00 1.00,15.00M 3.00,52.00 C 3.00,52.00 1.00,52.00 1.00,52.00 1.00,52.00 1.00,50.00 1.00,50.00M 59.00,52.00 C 59.00,52.00 4.00,52.00 4.00,52.00M 63.00,50.00 C 63.00,50.00 63.00,52.00 63.00,52.00 63.00,52.00 61.00,52.00 61.00,52.00",
@@ -74,7 +64,6 @@ const zoneData = [
           position: {lat: zones[1], lng: zones[2]},
           icon: svgMarker,
           map: map,
-          animation: google.maps.Animation.BOUNCE,
           title: zones[0],
         });
 
@@ -94,12 +83,25 @@ function buttonSwitch(){
         buttonList[i].addEventListener("click", () =>{
           map.setCenter(new google.maps.LatLng(zoneData[i][1], zoneData[i][2]));
           map.setZoom(18);
+          
         });
 
 }
 }
+
+function classSlide(){
+    if(listAnimation.classList.contains("animation-out")){
+      listAnimation.classList.remove("animation-out");
+      listAnimation.classList.add("animation-in");
+    }
+    else{
+      listAnimation.classList.remove("animation-in");
+      listAnimation.classList.add("animation-out");
+    }
+}
 buttonSwitch();
 window.initMap = initMap;
+buttonSlide.addEventListener("click", classSlide);
 
 // https://developers.google.com/maps/documentation/javascript
 // https://support.google.com/mymaps/answer/3024454?hl=en&co=GENIE.Platform%3DDesktop#:~:text=Create%20a%20map,map%20a%20name%20and%20description.

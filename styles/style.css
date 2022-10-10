@@ -1,25 +1,65 @@
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
-
-#map{
-    width: 50em;
-    height: 40em;
+:root{
+    --main-ctc-color: #4F52C9;
 }
 
+body{
+    margin: 0;
+}
+
+header{
+    border: 1px solid black;
+    padding: 1em;
+    background-color: var(--main-ctc-color);
+    margin-bottom: 2em;
+}
+
+header > input{
+    float: right;
+    padding: 1em;
+}
+
+#map{
+    width: 60em;
+    height: 45em;
+
+}
+
+main{
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+}
 #big-wrapper{
     position: relative;
+    overflow: hidden;
+
 }
 #side-wrapper > ul{
     display: flex;
-    flex-flow: column wrap;
+    flex-flow: column nowrap;
     max-width: 20em;
     width: 20em;
-    background-color: #4F52C9;
+    background-color: var(--main-ctc-color);
     color: white;
-    position: absolute;
-    top: 0;
+    position: relative;
+    top: -1em;
     padding: 1em;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 45em;
+    left: 0em;
+}
+
+#side-wrapper{
+    position: absolute;
+    height: 20em;
+    top: 0;
+    max-height: 38em;
+    left: -22em;
+
 }
 
 li{
@@ -30,7 +70,6 @@ li{
 
 li> p{
     font-family: 'Roboto', sans-serif;
-    
 }
 
 
@@ -46,7 +85,7 @@ li> p:nth-of-type(1){
 }
 
 .lowFill{
-
+    color: greenyellow;
 }
 
 .mediumFill{
@@ -55,4 +94,51 @@ li> p:nth-of-type(1){
 
 .highFill{
     color: red;
+}
+
+#side-out{
+    width: 2em;
+    height: 5em;
+    position: absolute;
+    top: 100%; 
+    left: 100%;  
+    background-image: url(../assets/arrow.png);
+    background-repeat: no-repeat;
+    background-color: #00ffec;
+    background-position: center;
+    border: none;
+}
+
+.selectButton{
+    font-family: 'Roboto', sans-serif;
+    border: none;
+    padding: .8em;
+    /* <a target="_blank" href="https://icons8.com/icon/kuUwIi4UBqyH/arrow">Arrow</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> */
+}
+
+.animation-out{
+    animation: slideOut .5s 0s 1 normal ease-in forwards;
+}
+
+.animation-in{
+    animation: slideIn .5s 0s 1 normal ease-out forwards;
+}
+
+
+@keyframes slideOut {
+    0%{
+        left: -22em;
+    }
+    100%{
+        left: 0;
+    }
+}
+
+@keyframes slideIn {
+    0%{
+        left: 0;
+    }
+    100%{
+        left: -22em;
+    }
 }
