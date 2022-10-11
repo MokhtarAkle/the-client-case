@@ -3,7 +3,9 @@ var buttonSelect = document.querySelector(".selectButton");
 var buttonList = document.querySelectorAll(".selectButton");
 var buttonSlide = document.querySelector("#side-out");
 var listAnimation = document.querySelector("#side-wrapper");
-
+var sortButton = document.querySelector("#sort-button");
+var listInformation = document.querySelectorAll(".zoneInfo");
+var position;
 var myStyles =[
   {
       featureType: "poi",
@@ -17,7 +19,7 @@ var myStyles =[
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 52.083004469900835, lng: 5.123430702685763},
-    zoom: 18,
+    zoom: 16,
     minZoom: 10,
     styles: myStyles,
     restriction: {
@@ -30,6 +32,10 @@ function initMap() {
     },
   });
   setMarkers(map);
+  
+
+  
+
 }
 
 const zoneData = [
@@ -68,38 +74,53 @@ function setMarkers(map){
         });
 
         const infoWindow = new google.maps.InfoWindow();
+        const contentString = listInformation[i].innerHTML;
     
         marker.addListener("click", () => {
           infoWindow.close();
-          infoWindow.setContent(marker.getTitle());
+          infoWindow.setContent(marker.getTitle() + contentString);
           infoWindow.open(marker.getMap(), marker);
+          map.setZoom(18);
         });
         
-      }   
-  }
-  
-function buttonSwitch(){
-  for (let i = 0; i < buttonList.length; i++){
+      } 
+      
+      for (let i = 0; i < buttonList.length; i++){
         buttonList[i].addEventListener("click", () =>{
           map.setCenter(new google.maps.LatLng(zoneData[i][1], zoneData[i][2]));
-          map.setZoom(18);
-          
+          map.setZoom(16);
         });
 
 }
-}
+  }
+  
+
 
 function classSlide(){
     if(listAnimation.classList.contains("animation-out")){
       listAnimation.classList.remove("animation-out");
       listAnimation.classList.add("animation-in");
+      buttonSlide.style.backgroundImage = "url('../assets/arrow-flip.png')"
     }
     else{
       listAnimation.classList.remove("animation-in");
       listAnimation.classList.add("animation-out");
+      buttonSlide.style.backgroundImage = "url('../assets/arrow.png')"
     }
 }
-buttonSwitch();
+
+
+function success(pos) {
+  const crd = pos.coords;
+
+  console.log('Your current position is:');
+  console.log(`Latitude : ${crd.latitude}`);
+  console.log(`Longitude: ${crd.longitude}`);
+  console.log(`More or less ${crd.accuracy} meters.`);
+}
+
+
+navigator.geolocation.getCurrentPosition(success);
 window.initMap = initMap;
 buttonSlide.addEventListener("click", classSlide);
 

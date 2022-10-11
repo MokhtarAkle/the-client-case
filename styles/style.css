@@ -5,6 +5,10 @@
     --main-ctc-color: #4F52C9;
 }
 
+*{
+    font-family: 'Roboto', sans-serif;
+}
+
 body{
     margin: 0;
 }
@@ -20,6 +24,7 @@ header > input{
     float: right;
     padding: 1em;
 }
+
 
 #map{
     width: 60em;
@@ -37,9 +42,9 @@ main{
     overflow: hidden;
 
 }
-#side-wrapper > ul{
+#big-list{
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: row wrap;
     max-width: 20em;
     width: 20em;
     background-color: var(--main-ctc-color);
@@ -51,6 +56,22 @@ main{
     overflow-x: hidden;
     max-height: 45em;
     left: 0em;
+
+}
+
+#big-list > li:nth-of-type(1), #big-list > li:nth-of-type(2){
+   flex-basis: 20%;
+   padding: 2em;
+}
+
+#big-list > li:nth-of-type(1)::after, #big-list > li:nth-of-type(2)::after{
+    background: var(--main-ctc-color);
+ }
+
+#big-list > li:nth-of-type(1) button, #big-list > li:nth-of-type(2) button{
+    padding: .5em 2em .5em 2em;
+    transform: translateX(-80%);
+
 }
 
 #side-wrapper{
@@ -65,11 +86,23 @@ main{
 li{
     position: relative;
     list-style-type: none;
-    
+    flex-grow: 1;
+}
+
+li::after{
+    content: "";
+    position: absolute;
+    height: 1px;
+    background: white;
+    width: 90%;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 li> p{
     font-family: 'Roboto', sans-serif;
+    
 }
 
 
@@ -77,8 +110,17 @@ li> button{
     position: absolute;
     top: 50%;
     left: 75%;
+    border-radius: 10%;
+    border: none;
+    color: var(--main-ctc-color);
 }
 
+li> button:hover{
+    background-color: var(--main-ctc-color);
+    transition: ease .2s;
+    color: white;
+    outline: 1px solid white;
+}
 li> p:nth-of-type(1){
     font-family: 'Rajdhani', sans-serif;
     font-size: 22px;
@@ -102,16 +144,21 @@ li> p:nth-of-type(1){
     position: absolute;
     top: 100%; 
     left: 100%;  
-    background-image: url(../assets/arrow.png);
+    background-image: url(../assets/arrow-flip.png);
     background-repeat: no-repeat;
     background-color: #00ffec;
     background-position: center;
-    border: none;
+    border: 1px solid white;
+    border-radius: 0 30% 30% 0;
 }
 
+#side-out:hover{
+    background-color: white;
+    transition: ease-in .2s;
+    border-color: black;
+}
 .selectButton{
-    font-family: 'Roboto', sans-serif;
-    border: none;
+    font-family: 'Rajdhani', sans-serif;
     padding: .8em;
     /* <a target="_blank" href="https://icons8.com/icon/kuUwIi4UBqyH/arrow">Arrow</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> */
 }
@@ -140,5 +187,23 @@ li> p:nth-of-type(1){
     }
     100%{
         left: -22em;
+    }
+}
+
+@media screen and (max-width: 960px) {
+    #map{
+        width: 35em;
+        height: 55em;
+    }
+
+    #big-list{
+        max-height: 53em;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    #map{
+        width: 25em;
+        height: 55em;
     }
 }
