@@ -1,12 +1,11 @@
 To-Do:
-Filter en Sorteer button positie + functionaliteit.
 zoek functionaliteit header
 filter functionaliteit maps
 layout maps buttons aanpassen
 media queries voor mobiel
-mobiele header en infowindows
-shortened borders > p
+mobiele header
 nog een check op highlighted zones grootte en zoom
+Filter en Sorteer button positie + functionaliteit.
 final check up en algemene styling
 
 # Titel
