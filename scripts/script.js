@@ -5,11 +5,15 @@ var buttonSlide = document.querySelector("#side-out");
 var listAnimation = document.querySelector("#side-wrapper");
 var sortButton = document.querySelector("#sort-button");
 var listInformation = document.querySelectorAll(".zoneInfo");
+var searchIcon = document.querySelector("#search-icon");
+var buttonSlideFlip = document.querySelector("#side-out-flip");
+var searchBar = document.querySelector("#search-bar");
+const media1 = window.matchMedia('(max-width: 980px)');
+const media2 = window.matchMedia('(min-width: 980px)');
 var position;
 var myStyles =[
   {
       featureType: "poi",
-      elementType: "labels",
       stylers: [
       { visibility: "off" }
       ]
@@ -62,6 +66,8 @@ function setMarkers(map){
       scale: 0.5,
       anchor: new google.maps.Point(0, 0),
       };
+
+
     
       for (let i = 0; i < zoneData.length; i++){
         const zones = zoneData[i];
@@ -86,27 +92,51 @@ function setMarkers(map){
       } 
       
       for (let i = 0; i < buttonList.length; i++){
+
+        const infoWindow1 = new google.maps.InfoWindow();
+        const contentString1 = listInformation[i].innerHTML;
+
         buttonList[i].addEventListener("click", () =>{
           map.setCenter(new google.maps.LatLng(zoneData[i][1], zoneData[i][2]));
           map.setZoom(16);
+          infoWindow1.close();
+          infoWindow1.setContent(contentString1);
+          infoWindow1.setPosition(new google.maps.LatLng(zoneData[i][1], zoneData[i][2]))
+          infoWindow1.open({anchor: undefined,
+            map,
+            shouldFocus: true,});
+            listAnimation.classList.toggle("animation-hidden");
+            listAnimation.classList.remove("animation-visible");
+            buttonSlide.classList.toggle("side-out-flip");
         });
 
 }
+
   }
   
 
 
 function classSlide(){
-    if(listAnimation.classList.contains("animation-out")){
-      listAnimation.classList.remove("animation-out");
-      listAnimation.classList.add("animation-in");
-      buttonSlide.style.backgroundImage = "url('../assets/arrow-flip.png')"
+    if(media1.matches){
+      listAnimation.classList.toggle("animation-visible");
+      listAnimation.classList.remove("animation-hidden");
+      buttonSlide.classList.toggle("side-out-flip");
     }
-    else{
-      listAnimation.classList.remove("animation-in");
-      listAnimation.classList.add("animation-out");
-      buttonSlide.style.backgroundImage = "url('../assets/arrow.png')"
+    else if(media2.matches){
+      listAnimation.classList.toggle("animation-hidden");
+      listAnimation.classList.remove("animation-visible");
+      buttonSlide.classList.toggle("side-out-flip");
     }
+}
+
+
+function searchShow(){
+  if(searchBar.style.display === "none"){
+    searchBar.style.display = "block";
+  }
+  else{
+    searchBar.style.display = "none";
+  }
 }
 
 
@@ -123,7 +153,7 @@ function success(pos) {
 navigator.geolocation.getCurrentPosition(success);
 window.initMap = initMap;
 buttonSlide.addEventListener("click", classSlide);
-
+searchIcon.addEventListener("click", searchShow);
 // https://developers.google.com/maps/documentation/javascript
 // https://support.google.com/mymaps/answer/3024454?hl=en&co=GENIE.Platform%3DDesktop#:~:text=Create%20a%20map,map%20a%20name%20and%20description.
 // https://stackoverflow.com/questions/41648702/prevent-marker-from-scaling-when-zoom-out
