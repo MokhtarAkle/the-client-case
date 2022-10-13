@@ -1,13 +1,3 @@
-To-Do:
-zoek functionaliteit header
-filter functionaliteit maps
-layout maps buttons aanpassen
-media queries voor mobiel
-mobiele header
-nog een check op highlighted zones grootte en zoom
-Filter en Sorteer button positie + functionaliteit.
-final check up en algemene styling
-
 # Interactieve map Coding the Curbs
 Voor gebruikers van de Coding the Curbs smartzone heb ik een interactieve kaart opgezet waarin gebruikers een overzicht van smart zones kunnen vinden terwijl ze onderweg zijn. Ook kunnen gebruikers meer informatie over de smart zones vinden waarmee ze een keuze kunnen maken over de geschiktheid van de zones.
 
