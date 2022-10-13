@@ -198,6 +198,15 @@ li> p:nth-of-type(1){
     left: -22em !important;
 }
 
+.map-location-center{
+    padding: 1em;
+    background-color: white;
+    border: none;
+    margin-top: .5em;
+    box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
+    border: 1px solid rgba(0, 0, 0, 0.14902);
+}
+
 
 
 @media screen and (max-width: 980px) {

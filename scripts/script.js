@@ -36,11 +36,49 @@ function initMap() {
     },
   });
   setMarkers(map);
-  
+  infoWindow1 = new google.maps.InfoWindow();
+
+  const locationButton = document.createElement("button");
+
+  locationButton.textContent = "Jouw locatie";
+  locationButton.classList.add("map-location-center");
+  map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+
 
   
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const posit = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+        new google.maps.Marker({
+          position: posit,
+          map,
+          title: " ",
+        });
+        infoWindow1.setPosition(posit);
+        infoWindow1.setContent("Jouw locatie");
+        infoWindow1.open(map);
+        map.setCenter(posit);
+        locationButton.addEventListener("click", () => {
+          map.setCenter(posit);
+        });
+      },
+    );
+  } else {
+    infoWindow1.setPosition({ lat: 52.083004469900835, lng: 5.123430702685763});
+    infoWindow1.setContent("Error: The Geolocation service failed. Error: Your browser doesn't support geolocation.");
+  }
+;
+
+
 
 }
+  
+
+
 
 const zoneData = [
   ["Twijnstraat 26", 52.083004469900835, 5.123430702685763],
@@ -140,17 +178,9 @@ function searchShow(){
 }
 
 
-function success(pos) {
-  const crd = pos.coords;
-
-  console.log('Your current position is:');
-  console.log(`Latitude : ${crd.latitude}`);
-  console.log(`Longitude: ${crd.longitude}`);
-  console.log(`More or less ${crd.accuracy} meters.`);
-}
 
 
-navigator.geolocation.getCurrentPosition(success);
+
 window.initMap = initMap;
 buttonSlide.addEventListener("click", classSlide);
 searchIcon.addEventListener("click", searchShow);
