@@ -218,7 +218,9 @@ li> p:nth-of-type(1){
     border: 1px solid rgba(0, 0, 0, 0.14902);
 }
 
-
+.funJSON{
+    white-space: pre;
+}
 
 @media screen and (max-width: 980px) {
     #map{

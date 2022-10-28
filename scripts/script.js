@@ -8,6 +8,11 @@ var listInformation = document.querySelectorAll(".zoneInfo");
 var searchIcon = document.querySelector("#search-icon");
 var buttonSlideFlip = document.querySelector("#side-out-flip");
 var searchBar = document.querySelector("#search-bar");
+var populateName = document.querySelectorAll(".nameJSON");
+var populateLocation = document.querySelectorAll(".locJSON");
+var populateFunction = document.querySelectorAll(".funJSON");
+var populateSize = document.querySelectorAll(".sizeJSON");
+var populateUse = document.querySelectorAll(".useJSON");
 const media1 = window.matchMedia('(max-width: 980px)');
 const media2 = window.matchMedia('(min-width: 980px)');
 var position;
@@ -80,21 +85,11 @@ function initMap() {
 
 
 
-const zoneData = [
-  ["Twijnstraat 26", 52.083004469900835, 5.123430702685763],
-  ["Twijnstraat 22", 52.08321101672864, 5.123452160356139],
-  ["Lange Haven 56", 51.91472436980267, 4.398241286108716],
-  ["Lange Haven 72", 51.91508246393664, 4.397431747091832],
-  ["Overtoom 450", 52.359644277776894, 4.862340256090279],
-  ["Kinkerstraat 272", 52.365312185513446, 4.86444024765305],
-  ["West-kruiskade 93", 51.91998786272775, 4.466003809322142],
-  ["Witte de Withstraat 32", 51.915771960203756, 4.478053167399616],
-];
 
-function setMarkers(map){
+
+async function setMarkers(map){
     
     const svgMarker = {
-      // path: "M 63.00,16.00 C 63.00,16.00 63.00,49.00 63.00,49.00M 61.00,12.00 C 61.00,12.00 63.00,12.00 63.00,12.00 63.00,12.00 63.00,14.00 63.00,14.00M 5.00,12.00 C 5.00,12.00 60.00,12.00 60.00,12.00M 1.00,14.00 C 1.00,14.00 1.00,12.00 1.00,12.00 1.00,12.00 3.00,12.00 3.00,12.00M 1.00,48.00 C 1.00,48.00 1.00,15.00 1.00,15.00M 3.00,52.00 C 3.00,52.00 1.00,52.00 1.00,52.00 1.00,52.00 1.00,50.00 1.00,50.00M 59.00,52.00 C 59.00,52.00 4.00,52.00 4.00,52.00M 63.00,50.00 C 63.00,50.00 63.00,52.00 63.00,52.00 63.00,52.00 61.00,52.00 61.00,52.00",
       path: "M 10 10 H 140 V 70 H 10 L 10 10",
       fill: "",
       fillOpacity: 0.2,
@@ -105,16 +100,18 @@ function setMarkers(map){
       anchor: new google.maps.Point(0, 0),
       };
 
-
+        const requestURL = './smartzones.json';
+        const request = new Request(requestURL);
+      
+        const response = await fetch(request);
+        const smartzones = await response.json();
     
-      for (let i = 0; i < zoneData.length; i++){
-        const zones = zoneData[i];
-        
+      for (let i = 0; i < smartzones.length; i++){        
       const marker = new google.maps.Marker({
-          position: {lat: zones[1], lng: zones[2]},
+          position: {lat: parseFloat(smartzones[i].lat), lng: parseFloat(smartzones[i].lon)},
           icon: svgMarker,
           map: map,
-          title: zones[0],
+          title: smartzones[i].location,
         });
 
         const infoWindow = new google.maps.InfoWindow();
@@ -135,11 +132,11 @@ function setMarkers(map){
         const contentString1 = listInformation[i].innerHTML;
 
         buttonList[i].addEventListener("click", () =>{
-          map.setCenter(new google.maps.LatLng(zoneData[i][1], zoneData[i][2]));
+          map.setCenter(new google.maps.LatLng(smartzones[i].lat, smartzones[i].lon));
           map.setZoom(16);
           infoWindow1.close();
-          infoWindow1.setContent(contentString1);
-          infoWindow1.setPosition(new google.maps.LatLng(zoneData[i][1], zoneData[i][2]))
+          infoWindow1.setContent(smartzones[i].location + contentString1);
+          infoWindow1.setPosition(new google.maps.LatLng(smartzones[i].lat, smartzones[i].lon))
           infoWindow1.open({anchor: undefined,
             map,
             shouldFocus: true,});
@@ -147,7 +144,20 @@ function setMarkers(map){
             listAnimation.classList.remove("animation-visible");
             buttonSlide.classList.toggle("side-out-flip");
         });
+}
 
+for (let i = 0; i < populateName.length; i++){
+  populateName[i].textContent = smartzones[i].name;
+  populateLocation[i].textContent = smartzones[i].location + ", " + smartzones[i].town;
+  populateSize[i].textContent = smartzones[i].size;
+  populateUse[i].textContent = smartzones[i].utilization;
+
+  if(smartzones[i].function1 || smartzones[i].function2 === undefined){
+    populateFunction[i].textContent = smartzones[i].function;
+  }
+  else{
+      populateFunction[i].textContent = smartzones[i].function + "\r\n " + smartzones[i].function1 + " | " + smartzones[i].function2;
+  }
 }
 
   }
@@ -176,9 +186,6 @@ function searchShow(){
     searchBar.style.display = "none";
   }
 }
-
-
-
 
 
 window.initMap = initMap;
