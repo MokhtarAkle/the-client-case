@@ -48,6 +48,16 @@ header > input:nth-of-type(2){
     display: none;
 }   
 
+.sr-only:not(:focus):not(:active) {
+    clip: rect(0 0 0 0); 
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap; 
+    width: 1px;
+}
+
 #map{
     margin-top: 2em;
     width: 60em;
@@ -154,11 +164,11 @@ li> p:nth-of-type(1){
 }
 
 .mediumFill{
-    color: orange;
+    color: #FFDD00;
 }
 
 .highFill{
-    color: red;
+    color: #E00000;
 }
 
 #side-out{
@@ -174,6 +184,7 @@ li> p:nth-of-type(1){
     border: 1px solid white;
     /* border-radius: 0 30% 30% 0; */
 }
+
 
 .side-out-flip{
     transform: rotate(180deg);
