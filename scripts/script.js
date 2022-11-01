@@ -115,7 +115,11 @@ async function setMarkers(map){
         });
 
         const infoWindow = new google.maps.InfoWindow();
-        const contentString = listInformation[i].innerHTML;
+        const contentString = "<br> <br>" + "Smartzone " + smartzones[i].name +
+                              "<br> <br>" + "Locatie: " + smartzones[i].location +
+                              "<br> <br>" + "Functie: " + smartzones[i].function + " | <br>" + smartzones[i].function1 + " | " + smartzones[i].function2 +
+                              "<br> <br>" + "Grootte: " + smartzones[i].size +
+                              "<br> <br>" + "Gebruik: " + smartzones[i].utilization;
     
         marker.addListener("click", () => {
           infoWindow.close();
@@ -123,41 +127,38 @@ async function setMarkers(map){
           infoWindow.open(marker.getMap(), marker);
           map.setZoom(18);
         });
-        
-      } 
-      
-      for (let i = 0; i < buttonList.length; i++){
-
-        const infoWindow1 = new google.maps.InfoWindow();
-        const contentString1 = listInformation[i].innerHTML;
 
         buttonList[i].addEventListener("click", () =>{
           map.setCenter(new google.maps.LatLng(smartzones[i].lat, smartzones[i].lon));
           map.setZoom(16);
-          infoWindow1.close();
-          infoWindow1.setContent(smartzones[i].location + contentString1);
-          infoWindow1.setPosition(new google.maps.LatLng(smartzones[i].lat, smartzones[i].lon))
-          infoWindow1.open({anchor: undefined,
+          infoWindow.close();
+          infoWindow.setContent(marker.getTitle() + contentString);
+          infoWindow.setPosition(new google.maps.LatLng(smartzones[i].lat, smartzones[i].lon))
+          infoWindow.open({anchor: undefined,
             map,
             shouldFocus: true,});
             listAnimation.classList.toggle("animation-hidden");
             listAnimation.classList.remove("animation-visible");
             buttonSlide.classList.toggle("side-out-flip");
         });
-}
+        console.log(listInformation[i].innerHTML);
+      } 
+
 
 for (let i = 0; i < populateName.length; i++){
   populateName[i].textContent = smartzones[i].name;
   populateLocation[i].textContent = smartzones[i].location + ", " + smartzones[i].town;
   populateSize[i].textContent = smartzones[i].size;
   populateUse[i].textContent = smartzones[i].utilization;
+  populateFunction[i].textContent = smartzones[i].function + " | " + "\r\n" + smartzones[i].function1 + " | " +  smartzones[i].function2 ;
 
-  if(smartzones[i].function1 || smartzones[i].function2 === undefined){
-    populateFunction[i].textContent = smartzones[i].function;
+  if(smartzones[i].function1 == " "){
+    populateFunction[i].textContent = smartzones[i].function
   }
-  else{
-      populateFunction[i].textContent = smartzones[i].function + "\r\n " + smartzones[i].function1 + " | " + smartzones[i].function2;
+  else if(smartzones[i].function2 == " "){
+    populateFunction[i].textContent = smartzones[i].function + " | "  + "\r\n" + smartzones[i].function1
   }
+  
 }
 
   }
