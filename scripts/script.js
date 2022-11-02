@@ -15,6 +15,7 @@ var populateSize = document.querySelectorAll(".sizeJSON");
 var populateUse = document.querySelectorAll(".useJSON");
 const media1 = window.matchMedia('(max-width: 980px)');
 const media2 = window.matchMedia('(min-width: 980px)');
+
 var position;
 var myStyles =[
   {
@@ -24,6 +25,7 @@ var myStyles =[
       ]
   }
 ];
+
 
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
@@ -48,6 +50,8 @@ function initMap() {
   locationButton.textContent = "Jouw locatie";
   locationButton.classList.add("map-location-center");
   map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+
+
 
 
   
@@ -141,7 +145,9 @@ async function setMarkers(map){
             listAnimation.classList.remove("animation-visible");
             buttonSlide.classList.toggle("side-out-flip");
         });
-        console.log(listInformation[i].innerHTML);
+        google.maps.event.addListener(map, "click", function(event) {
+          infoWindow.close();
+      });
       } 
 
 
@@ -158,7 +164,15 @@ for (let i = 0; i < populateName.length; i++){
   else if(smartzones[i].function2 == " "){
     populateFunction[i].textContent = smartzones[i].function + " | "  + "\r\n" + smartzones[i].function1
   }
-  
+}
+
+var checkedValue = document.querySelectorAll('input[type="checkbox"]:checked');
+var myLength = checkedValue.length;
+var input;
+
+for (let i = 0; i < myLength; i++){
+  input = checkedValue[i];
+    console.log(input.value)
 }
 
   }

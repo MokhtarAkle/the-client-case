@@ -177,12 +177,13 @@ li> p:nth-of-type(1){
     position: absolute;
     top: 100%; 
     left: 100%;  
-    background-image: url(../assets/arrow.png);
+    background-image: url(../assets/left-with-straight-arrow.png); /* <a href="https://www.flaticon.com/free-icons/arrow" title="arrow icons">Arrow icons created by Freepik - Flaticon</a> */
     background-repeat: no-repeat;
     background-color: #00ffec;
+    background-size: 12px;
     background-position: center;
-    border: 1px solid white;
-    /* border-radius: 0 30% 30% 0; */
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
 }
 
 
@@ -225,6 +226,7 @@ li> p:nth-of-type(1){
 .gm-style .gm-style-iw {
     font-size: 16px;
  }
+
 @media screen and (max-width: 980px) {
     #map{
         width: 35em;
