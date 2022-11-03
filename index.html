@@ -23,9 +23,9 @@
                     <li><button id="sort-button">Sorteer</button></li>
                     <li><button id="filter-button">Filter</button></li>
                     <li class="filterStyle"><p>Locatie: </p>
-                        <input type="checkbox" name="filterDistance" value="distance" id="distanceFilter" checked>
+                        <input type="checkbox" name="filterDistance" value="distance" id="distanceFilter">
                         <label for="nameFilter">< 5 km </label>
-                        <input type="checkbox" name="filterLoc" value="utrecht" id="utrFilter">
+                        <input type="checkbox" name="filterLoc" value="utrecht" id="utrFilter" checked>
                         <label for="utrFilter">Utrecht</label>
                         <input type="checkbox" name="filterLoc" value="schiedam" id="schieFilter">
                         <label for="schieFilter">Schiedam</label>
@@ -34,7 +34,7 @@
                         <input type="checkbox" name="filterLoc" value="rotterdam" id="rotFilter">
                         <label for="rotFilter">Rotterdam</label>
                         <p>Functie: </p>
-                        <input type="checkbox" name="filterFunc" value="parkeren" id="parkFilter" checked>
+                        <input type="checkbox" name="filterFunc" value="parkeren" id="parkFilter">
                         <label for="parkFilter">Parkeren</label>
                         <input type="checkbox" name="FilterFunc" value="laad" id="loadFilter">
                         <label for="loadFilter">Laden en Lossen</label>
@@ -54,22 +54,29 @@
                         <label for="50Filter">< 50%</label>
                         <input type="checkbox" name="filterGebruik" value="75" id="75Filter">
                         <label for="75Filter">< 75%</label></li>
+                    <li class="sortStyle">
+                        <p>Sorteer op: </p>
+                        <button class="sortSize">Grootte</button>
+                        <button class="sortUse">Gebruik</button>
+                        <button class="sortFunc">Functie</button>
+                        <button class="sortLoc">Locatie</button>
+                    </li>
 
-                    <li class="zoneInfo"><p>Smartzone: <span class="nameJSON"></span></p>
+                    <li class="zoneInfo utrecht parkeren 15plek onder50"><p>Smartzone: <span class="nameJSON"></span></p>
                         <p>Locatie: <span class="locJSON"></span></p>
                         <p>Functie: <span class="funJSON"></span></p>
                         <p>Grootte: <span class="sizeJSON"></span></p>
                         <p>Gebruik: <span class="mediumFill useJSON"></span></p>
                         <button class="selectButton">Selecteer</button>
                         </li>
-                    <li class="zoneInfo"><p>Smartzone: <span class="nameJSON"></span></p>
+                    <li class="zoneInfo utrecht laden 15plek buiten75"><p>Smartzone: <span class="nameJSON"></span></p>
                         <p>Locatie: <span class="locJSON"></span></p>
                         <p>Functie: <span class="funJSON"></span></p>
                         <p>Grootte: <span class="sizeJSON"></span></p>
                         <p>Gebruik: <span class="highFill useJSON"></span></p>
                         <button class="selectButton">Selecteer</button>
                     </li>
-                    <li class="zoneInfo"><p>Smartzone: <span class="nameJSON"></span></p>
+                    <li class="zoneInfo schiedam laden 1plek onder25"><p>Smartzone: <span class="nameJSON"></span></p>
                         <p>Locatie: <span class="locJSON"></span></p>
                         <p>Functie: <span class="funJSON"></span></p>
                         <p>Grootte: <span class="sizeJSON"></span></p>

@@ -13,6 +13,8 @@ var populateLocation = document.querySelectorAll(".locJSON");
 var populateFunction = document.querySelectorAll(".funJSON");
 var populateSize = document.querySelectorAll(".sizeJSON");
 var populateUse = document.querySelectorAll(".useJSON");
+var checkboxes = document.querySelectorAll("input[type=checkbox]");
+var sortSize = document.querySelector(".sortSize");
 const media1 = window.matchMedia('(max-width: 980px)');
 const media2 = window.matchMedia('(min-width: 980px)');
 
@@ -110,6 +112,7 @@ async function setMarkers(map){
         const response = await fetch(request);
         const smartzones = await response.json();
     
+      
       for (let i = 0; i < smartzones.length; i++){        
       const marker = new google.maps.Marker({
           position: {lat: parseFloat(smartzones[i].lat), lng: parseFloat(smartzones[i].lon)},
@@ -132,50 +135,66 @@ async function setMarkers(map){
           map.setZoom(18);
         });
 
-        buttonList[i].addEventListener("click", () =>{
-          map.setCenter(new google.maps.LatLng(smartzones[i].lat, smartzones[i].lon));
-          map.setZoom(16);
-          infoWindow.close();
-          infoWindow.setContent(marker.getTitle() + contentString);
-          infoWindow.setPosition(new google.maps.LatLng(smartzones[i].lat, smartzones[i].lon))
-          infoWindow.open({anchor: undefined,
-            map,
-            shouldFocus: true,});
-            listAnimation.classList.toggle("animation-hidden");
-            listAnimation.classList.remove("animation-visible");
-            buttonSlide.classList.toggle("side-out-flip");
-        });
+          buttonList[i].addEventListener("click", () =>{
+            map.setCenter(new google.maps.LatLng(smartzones[i].lat, smartzones[i].lon));
+            map.setZoom(16);
+            infoWindow.close();
+            infoWindow.setContent(marker.getTitle() + contentString);
+            infoWindow.setPosition(new google.maps.LatLng(smartzones[i].lat, smartzones[i].lon))
+            infoWindow.open({anchor: undefined,
+              map,
+              shouldFocus: true,});
+              listAnimation.classList.toggle("animation-hidden");
+              listAnimation.classList.remove("animation-visible");
+              buttonSlide.classList.toggle("side-out-flip");
+          });
+
+
         google.maps.event.addListener(map, "click", function(event) {
           infoWindow.close();
       });
       } 
 
 
-for (let i = 0; i < populateName.length; i++){
-  populateName[i].textContent = smartzones[i].name;
-  populateLocation[i].textContent = smartzones[i].location + ", " + smartzones[i].town;
-  populateSize[i].textContent = smartzones[i].size;
-  populateUse[i].textContent = smartzones[i].utilization;
-  populateFunction[i].textContent = smartzones[i].function + " | " + "\r\n" + smartzones[i].function1 + " | " +  smartzones[i].function2 ;
 
-  if(smartzones[i].function1 == " "){
-    populateFunction[i].textContent = smartzones[i].function
-  }
-  else if(smartzones[i].function2 == " "){
-    populateFunction[i].textContent = smartzones[i].function + " | "  + "\r\n" + smartzones[i].function1
+
+function populate(){
+  for (let i = 0; i < populateName.length; i++){
+    populateName[i].textContent = smartzones[i].name;
+    populateLocation[i].textContent = smartzones[i].location + ", " + smartzones[i].town;
+    populateSize[i].textContent = smartzones[i].size;
+    populateUse[i].textContent = smartzones[i].utilization;
+    populateFunction[i].textContent = smartzones[i].function + " | " + "\r\n" + smartzones[i].function1 + " | " +  smartzones[i].function2 ;
+  
+    if(smartzones[i].function1 == " "){
+      populateFunction[i].textContent = smartzones[i].function
+    }
+    else if(smartzones[i].function2 == " "){
+      populateFunction[i].textContent = smartzones[i].function + " | "  + "\r\n" + smartzones[i].function1
+    }
   }
 }
 
-var checkedValue = document.querySelectorAll('input[type="checkbox"]:checked');
-var myLength = checkedValue.length;
-var input;
+populate();
 
-for (let i = 0; i < myLength; i++){
-  input = checkedValue[i];
-    console.log(input.value)
+sortSize.addEventListener("click", () =>{
+  smartzones.sort((a, b) => {
+const sizeA = a.size.toUpperCase(); // ignore upper and lowercase
+const sizeB = b.size.toUpperCase(); // ignore upper and lowercase
+if (sizeA < sizeB) {
+return -1;
 }
+if (sizeA > sizeB) {
+return 1;
+}
+populate();
+populateButtons();
+return 0;
+});
+console.log(smartzones)
+});
 
-  }
+}
   
 
 
@@ -202,8 +221,42 @@ function searchShow(){
   }
 }
 
+function filterTest(){
+
+
+
+for (let i = 0; i < checkboxes.length; i++){
+
+  checkboxes[i].addEventListener("change", () =>{
+    var checkedValue = document.querySelectorAll('input[type="checkbox"]:checked');
+    var myLength = checkedValue.length;
+    var input;
+    
+    input = checkedValue[i];
+    console.log(checkboxes[i])
+    console.log(listInformation[i])
+    if(checkboxes[i].value == "utrecht" ){
+      console.log(listInformation[i])
+      if(!listInformation[i].classList.contains("utrecht")){
+        listInformation[i].style.display = "none";
+        
+      }
+
+
+    }
+    else{
+      listInformation[0].style.display = "block";
+
+    }
+  });
+}
+
+}
+
+
 
 window.initMap = initMap;
+filterTest();
 buttonSlide.addEventListener("click", classSlide);
 searchIcon.addEventListener("click", searchShow);
 // https://developers.google.com/maps/documentation/javascript

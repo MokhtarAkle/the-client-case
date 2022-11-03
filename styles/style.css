@@ -227,6 +227,20 @@ li> p:nth-of-type(1){
     font-size: 16px;
  }
 
+.filterStyle{
+    display: none;
+}
+
+
+.sortStyle > button{
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-bottom: 1em;
+    border-radius: 10%;
+    border: none;
+    color: var(--main-ctc-color);
+}
 @media screen and (max-width: 980px) {
     #map{
         width: 35em;
