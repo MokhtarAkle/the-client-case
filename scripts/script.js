@@ -164,8 +164,8 @@ async function setMarkers(map){
         });
 
         const infoWindow = new google.maps.InfoWindow();
-        const contentString = "<br> <br>" + "Smartzone " + smartzones[i].name +
-                              "<br> <br>" + "Locatie: " + smartzones[i].location +
+        const contentString = "Smartzone " + smartzones[i].name +
+                              "<br> <br>" + "Locatie: <span class='titleStyle'>" + smartzones[i].location + " </span>" +
                               "<br> <br>" + "Functie: " + smartzones[i].function + " | <br>" + smartzones[i].function1 + " | " + smartzones[i].function2 +
                               "<br> <br>" + "Grootte: " + smartzones[i].size +
                               "<br> <br>" + "Gebruik: " + smartzones[i].utilization +
@@ -173,7 +173,7 @@ async function setMarkers(map){
     
         marker.addListener("click", () => {
           infoWindow.close();
-          infoWindow.setContent(marker.getTitle() + contentString);
+          infoWindow.setContent(contentString);
           infoWindow.open(marker.getMap(), marker);
           map.setZoom(18);
         });
@@ -182,7 +182,7 @@ async function setMarkers(map){
             map.setCenter(new google.maps.LatLng(smartzones[i].lat, smartzones[i].lon));
             map.setZoom(16);
             infoWindow.close();
-            infoWindow.setContent(marker.getTitle() + contentString);
+            infoWindow.setContent(contentString);
             infoWindow.setPosition(new google.maps.LatLng(smartzones[i].lat, smartzones[i].lon))
             infoWindow.open({anchor: undefined,
               map,
