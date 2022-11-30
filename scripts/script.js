@@ -201,24 +201,41 @@ async function setMarkers(map){
 
 
 
-function populate(){
-  for (let i = 0; i < populateName.length; i++){
-    populateName[i].textContent = smartzones[i].name;
-    populateLocation[i].textContent = smartzones[i].location + ", " + smartzones[i].town;
-    populateSize[i].textContent = smartzones[i].size;
-    populateUse[i].textContent = smartzones[i].utilization;
-    populateFunction[i].textContent = smartzones[i].function + " | " + "\r\n" + smartzones[i].function1 + " | " +  smartzones[i].function2 ;
+function populate(something){
+  for (let i = 0; i < something.length; i++){
+    populateName[i].textContent = something[i].name;
+    populateLocation[i].textContent = something[i].location + ", " + something[i].town;
+    populateSize[i].textContent = something[i].size;
+    populateUse[i].textContent = something[i].utilization;
+    populateFunction[i].textContent = something[i].function + " | " + "\r\n" + something[i].function1 + " | " +  something[i].function2 ;
   
-    if(smartzones[i].function1 == " "){
-      populateFunction[i].textContent = smartzones[i].function
+    if(something[i].function1 == " "){
+      populateFunction[i].textContent = something[i].function
     }
-    else if(smartzones[i].function2 == " "){
-      populateFunction[i].textContent = smartzones[i].function + " | "  + "\r\n" + smartzones[i].function1
+    else if(something[i].function2 == " "){
+      populateFunction[i].textContent = something[i].function + " | "  + "\r\n" + something[i].function1
     }
   }
 }
 
-populate();
+// function populate(){
+//   for (let i = 0; i < populateName.length; i++){
+//     populateName[i].textContent = smartzones[i].name;
+//     populateLocation[i].textContent = smartzones[i].location + ", " + smartzones[i].town;
+//     populateSize[i].textContent = smartzones[i].size;
+//     populateUse[i].textContent = smartzones[i].utilization;
+//     populateFunction[i].textContent = smartzones[i].function + " | " + "\r\n" + smartzones[i].function1 + " | " +  smartzones[i].function2 ;
+  
+//     if(smartzones[i].function1 == " "){
+//       populateFunction[i].textContent = smartzones[i].function
+//     }
+//     else if(smartzones[i].function2 == " "){
+//       populateFunction[i].textContent = smartzones[i].function + " | "  + "\r\n" + smartzones[i].function1
+//     }
+//   }
+// }
+
+populate(smartzones);
 
 function initSort(){
 
@@ -233,7 +250,7 @@ function initSort(){
   if (sizeA > sizeB) {
   return 1;
   }
-  populate();
+  populate(smartzones);
   return 0;
   });
   });
@@ -248,7 +265,7 @@ function initSort(){
   if (useA > useB) {
   return 1;
   }
-  populate();
+  populate(smartzones);
   return 0;
   });
   });
@@ -263,7 +280,7 @@ function initSort(){
   if (funcA > funcB) {
   return 1;
   }
-  populate();
+  populate(smartzones);
   return 0;
   });
   });
@@ -278,13 +295,37 @@ function initSort(){
   if (locA > locB) {
   return 1;
   }
-  populate();
+  populate(smartzones);
   return 0;
   });
   });
 }
 initSort();
 
+function filterTest(){
+  
+  for (let i = 0; i < checkboxes.length; i++){
+    checkboxes[i].addEventListener("change", () =>{
+      var checkedValue = document.querySelectorAll('input[type="checkbox"]:checked');
+      var input;
+      
+      input = checkedValue[i];
+      if(checkboxes[i].value == "utrecht" ){
+        let filterCheck = smartzones.filter(location => location.town == "Utrecht");
+        console.log(checkboxes);
+        console.log(smartzones);
+        console.log(filterCheck);
+        populate(filterCheck);
+      }
+      else{
+  
+      }
+    });
+  
+  }
+  
+  }
+  filterTest();
 
 }
   
@@ -336,42 +377,11 @@ function filterShow(){
   }
 }
 
-function filterTest(){
 
-
-
-for (let i = 0; i < checkboxes.length; i++){
-
-  checkboxes[i].addEventListener("change", () =>{
-    var checkedValue = document.querySelectorAll('input[type="checkbox"]:checked');
-    var myLength = checkedValue.length;
-    var input;
-    
-    input = checkedValue[i];
-    console.log(checkboxes[i])
-    console.log(listInformation[i])
-    if(checkboxes[i].value == "utrecht" ){
-      console.log(listInformation[i])
-      if(!listInformation[i].classList.contains("utrecht")){
-        listInformation[i].style.display = "none";
-        
-      }
-
-
-    }
-    else{
-      listInformation[0].style.display = "block";
-
-    }
-  });
-}
-
-}
 
 
 
 window.initMap = initMap;
-filterTest();
 buttonSlide.addEventListener("click", classSlide);
 searchIcon.addEventListener("click", searchShow);
 sortButton.addEventListener("click", sortShow);
