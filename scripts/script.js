@@ -164,12 +164,7 @@ async function setMarkers(map){
         });
 
         const infoWindow = new google.maps.InfoWindow();
-        const contentString = "Smartzone " + smartzones[i].name +
-                              "<br> <br>" + "Locatie: <span class='titleStyle'>" + smartzones[i].location + " </span>" +
-                              "<br> <br>" + "Functie: " + smartzones[i].function + " | <br>" + smartzones[i].function1 + " | " + smartzones[i].function2 +
-                              "<br> <br>" + "Grootte: " + smartzones[i].size +
-                              "<br> <br>" + "Gebruik: " + smartzones[i].utilization +
-                              "<br> <br>" + "<a href='http://maps.google.com/maps?saddr=52.362440594307465,4.915010541817515&daddr=" + smartzones[i].lat + "," + smartzones[i].lon +"'><img class='directionsButton' src='./assets/directions.svg'></a>";
+
     
         marker.addListener("click", () => {
           infoWindow.close();
@@ -178,20 +173,31 @@ async function setMarkers(map){
           map.setZoom(18);
         });
 
-          buttonList[i].addEventListener("click", () =>{
-            map.setCenter(new google.maps.LatLng(smartzones[i].lat, smartzones[i].lon));
+        function buttonPopulate(something){
+          const contentString = "Smartzone " + something[i].name +
+          "<br> <br>" + "Locatie: <span class='titleStyle'>" + something[i].location + " </span>" +
+          "<br> <br>" + "Functie: " + something[i].function + " | <br>" + something[i].function1 + " | " + something[i].function2 +
+          "<br> <br>" + "Grootte: " + something[i].size +
+          "<br> <br>" + "Gebruik: " + something[i].utilization +
+          "<br> <br>" + "<a href='http://maps.google.com/maps?saddr=52.362440594307465,4.915010541817515&daddr=" + something[i].lat + "," + something[i].lon +"'><img class='directionsButton' src='./assets/directions.svg'></a>";
+
+          function buttonAdd(){
+            map.setCenter(new google.maps.LatLng(something[i].lat, something[i].lon));
             map.setZoom(16);
             infoWindow.close();
             infoWindow.setContent(contentString);
-            infoWindow.setPosition(new google.maps.LatLng(smartzones[i].lat, smartzones[i].lon))
+            infoWindow.setPosition(new google.maps.LatLng(something[i].lat, something[i].lon))
             infoWindow.open({anchor: undefined,
               map,
               shouldFocus: true,});
               listAnimation.classList.toggle("animation-hidden");
               listAnimation.classList.remove("animation-visible");
               buttonSlide.classList.toggle("side-out-flip");
-          });
-
+          }
+          buttonList[i].addEventListener("click", buttonAdd);
+        }
+        buttonPopulate(smartzones);
+        
 
         google.maps.event.addListener(map, "click", function(event) {
           infoWindow.close();
@@ -201,39 +207,44 @@ async function setMarkers(map){
 
 
 
-function populate(something){
-  for (let i = 0; i < something.length; i++){
-    populateName[i].textContent = something[i].name;
-    populateLocation[i].textContent = something[i].location + ", " + something[i].town;
-    populateSize[i].textContent = something[i].size;
-    populateUse[i].textContent = something[i].utilization;
-    populateFunction[i].textContent = something[i].function + " | " + "\r\n" + something[i].function1 + " | " +  something[i].function2 ;
-  
-    if(something[i].function1 == " "){
-      populateFunction[i].textContent = something[i].function
+function populate(usedArray){
+  for (let i = 0; i < usedArray.length; i++){
+    populateName[i].textContent = usedArray[i].name;
+    populateLocation[i].textContent = usedArray[i].location + ", " + usedArray[i].town;
+    populateSize[i].textContent = usedArray[i].size;
+    populateUse[i].textContent = usedArray[i].utilization;
+    populateFunction[i].textContent = usedArray[i].function + " | " + "\r\n" + usedArray[i].function1 + " | " +  usedArray[i].function2 ;
+    listInformation[i].style.display = "block";
+    if(parseInt(usedArray[i].utilization) < 50){
+      populateUse[i].classList.add("lowFill");
     }
-    else if(something[i].function2 == " "){
-      populateFunction[i].textContent = something[i].function + " | "  + "\r\n" + something[i].function1
+    else if(parseInt(usedArray[i].utilization) > 50 && parseInt(usedArray[i].utilization) < 75){
+      populateUse[i].classList.add("mediumFill");
+    }
+    else if(parseInt(usedArray[i].utilization) > 75){
+      populateUse[i].classList.add("highFill");
+    }
+
+    if(usedArray[i].function1 == " "){
+      populateFunction[i].textContent = usedArray[i].function
+    }
+    else if(usedArray[i].function2 == " "){
+      populateFunction[i].textContent = usedArray[i].function + " | "  + "\r\n" + usedArray[i].function1
     }
   }
 }
 
-// function populate(){
-//   for (let i = 0; i < populateName.length; i++){
-//     populateName[i].textContent = smartzones[i].name;
-//     populateLocation[i].textContent = smartzones[i].location + ", " + smartzones[i].town;
-//     populateSize[i].textContent = smartzones[i].size;
-//     populateUse[i].textContent = smartzones[i].utilization;
-//     populateFunction[i].textContent = smartzones[i].function + " | " + "\r\n" + smartzones[i].function1 + " | " +  smartzones[i].function2 ;
-  
-//     if(smartzones[i].function1 == " "){
-//       populateFunction[i].textContent = smartzones[i].function
-//     }
-//     else if(smartzones[i].function2 == " "){
-//       populateFunction[i].textContent = smartzones[i].function + " | "  + "\r\n" + smartzones[i].function1
-//     }
-//   }
-// }
+function depopulate(){
+  for (let i = 0; i < populateName.length; i++){
+    populateName[i].textContent = " ";
+    populateLocation[i].textContent = " ";
+    populateSize[i].textContent = " ";
+    populateUse[i].textContent = " ";
+    populateFunction[i].textContent = " ";
+    listInformation[i].style.display = "none";
+    populateUse[i].classList.remove("lowFill", "mediumFill", "highFill");
+  }
+}
 
 populate(smartzones);
 
@@ -250,6 +261,7 @@ function initSort(){
   if (sizeA > sizeB) {
   return 1;
   }
+  depopulate();
   populate(smartzones);
   return 0;
   });
@@ -265,6 +277,7 @@ function initSort(){
   if (useA > useB) {
   return 1;
   }
+  depopulate();
   populate(smartzones);
   return 0;
   });
@@ -280,6 +293,7 @@ function initSort(){
   if (funcA > funcB) {
   return 1;
   }
+  depopulate();
   populate(smartzones);
   return 0;
   });
@@ -295,6 +309,7 @@ function initSort(){
   if (locA > locB) {
   return 1;
   }
+  depopulate();
   populate(smartzones);
   return 0;
   });
@@ -306,20 +321,34 @@ function filterTest(){
   
   for (let i = 0; i < checkboxes.length; i++){
     checkboxes[i].addEventListener("change", () =>{
-      var checkedValue = document.querySelectorAll('input[type="checkbox"]:checked');
-      var input;
-      
-      input = checkedValue[i];
-      if(checkboxes[i].value == "utrecht" ){
-        let filterCheck = smartzones.filter(location => location.town == "Utrecht");
-        console.log(checkboxes);
-        console.log(smartzones);
-        console.log(filterCheck);
-        populate(filterCheck);
+      if(checkboxes[i].name == "filterLoc" && checkboxes[i].checked){
+        let locCheck = smartzones.filter(location => location.town == checkboxes[i].value);
+        depopulate();
+        populate(locCheck);
+        buttonPopulate(locCheck);
+      }
+      else if(checkboxes[i].name == "filterFunc" && checkboxes[i].checked){
+        let funcCheck = smartzones.filter(functionality => functionality.function == checkboxes[i].value);
+        console.log(checkboxes[i].value)
+        depopulate();
+        populate(funcCheck);
+      }
+      else if(checkboxes[i].name == "filterGrootte" && checkboxes[i].checked){
+        let sizeCheck = smartzones.filter(area => area.size == checkboxes[i].value);
+        depopulate();
+        populate(sizeCheck);
+      }
+      else if(checkboxes[i].name == "filterGebruik" && checkboxes[i].checked){
+        let usageCheck = smartzones.filter(usage => parseInt(usage.utilization) < parseInt(checkboxes[i].value));
+        console.log(checkboxes[i].value)
+        depopulate();
+        populate(usageCheck);
       }
       else{
-  
+        depopulate();
+        populate(smartzones);
       }
+
     });
   
   }
