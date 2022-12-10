@@ -17,7 +17,7 @@ var checkboxes = document.querySelectorAll("input[type=checkbox]");
 var sortSize = document.querySelector(".sortSize");
 var sortUse = document.querySelector(".sortUse");
 var sortFunc = document.querySelector(".sortFunc");
-var sortLoc = document.querySelector(".sortLoc");
+var sortLoc = document.querySelector(".sortLoc"); 
 var sortStyling = document.querySelector(".sortHidden");
 var sortButton = document.querySelector("#sort-button");
 var filterStyling = document.querySelector(".filterHidden");
@@ -166,12 +166,7 @@ async function setMarkers(map){
         const infoWindow = new google.maps.InfoWindow();
 
     
-        marker.addListener("click", () => {
-          infoWindow.close();
-          infoWindow.setContent(contentString);
-          infoWindow.open(marker.getMap(), marker);
-          map.setZoom(18);
-        });
+
 
         function buttonPopulate(something){
           const contentString = "Smartzone " + something[i].name +
@@ -181,6 +176,13 @@ async function setMarkers(map){
           "<br> <br>" + "Gebruik: " + something[i].utilization +
           "<br> <br>" + "<a href='http://maps.google.com/maps?saddr=52.362440594307465,4.915010541817515&daddr=" + something[i].lat + "," + something[i].lon +"'><img class='directionsButton' src='./assets/directions.svg'></a>";
 
+          marker.addListener("click", () => {
+            infoWindow.close();
+            infoWindow.setContent(contentString);
+            infoWindow.open(marker.getMap(), marker);
+            map.setZoom(18);
+          });
+          
           function buttonAdd(){
             map.setCenter(new google.maps.LatLng(something[i].lat, something[i].lon));
             map.setZoom(16);
