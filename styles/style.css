@@ -22,8 +22,12 @@ header{
     background-color: var(--main-ctc-color);
     margin-bottom: 2em;
     width: 100%;
+    text-align: center;
 }
 
+header > img{
+    float: left;
+}
 header > svg{
     float: right;
     display: none;
@@ -41,6 +45,12 @@ header > input:nth-of-type(1){
     left: 0;
     width: 100% ;
     display: none;
+}
+
+header > p{
+    color: white;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 24px;
 }
 
 .directionsButton{
@@ -309,6 +319,10 @@ form> label{
     #side-wrapper{
         left: -22em;
     }   
+
+    header > img{
+        float: none;
+    }
 }
 
 @media screen and (max-width: 580px) {
