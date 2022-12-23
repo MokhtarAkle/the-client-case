@@ -15,7 +15,7 @@
     </header>
 
     <main>
-        <form>
+        <form id="search-form">
             <label for="big-search-bar">Zoek op adres:</label>
             <input id="big-search-bar" type="text" placeholder="Search...">
         </form>
@@ -28,6 +28,21 @@
                     <li><button id="filter-button">Filter</button></li>
                     <li class="filterHidden">
                         <p>Filter Op: </p>
+                        <span class="dynamicCard"></span>
+                        <span class="dynamicCard"></span>
+                        <span class="dynamicCard"></span>
+                        <span class="dynamicCard"></span>
+                        <span class="dynamicCard"></span>
+                        <span class="dynamicCard"></span>
+                        <span class="dynamicCard"></span>
+                        <span class="dynamicCard"></span>
+                        <span class="dynamicCard"></span>
+                        <span class="dynamicCard"></span>
+                        <span class="dynamicCard"></span>
+                        <span class="dynamicCard"></span>
+                        <span class="dynamicCard"></span>
+                        <span class="dynamicCard"></span>
+                        <span class="dynamicCard"></span>
                         <p>Locatie: </p>
                         <input type="checkbox" name="filterDistance" value="distance" id="distanceFilter">
                         <label for="distanceFilter">&lt; 5 km </label>
@@ -125,6 +140,6 @@
     </main>
     <script src="./scripts/script.js"></script>
     <script src="./smartzones.json"></script>
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbdCeqaJpolGUNuwpKjaDlYOtUUsYkf5w&callback=initMap"></script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxoJXbVdPsj0_XhdyVVzkaNG3wot69lgQ&libraries=places&callback=initMap"></script>
 </body>
 </html>

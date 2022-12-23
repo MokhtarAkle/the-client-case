@@ -258,16 +258,30 @@ li> p:nth-of-type(1){
 }
 
 #big-search-bar{
-    padding: 1em;
-
+    padding: 1em 2em 1em 2em;
 }
 
+.sizeActive , .useActive, .funcActive, .locActive{
+    background-color: var(--main-ctc-color);
+    color: white !important;
+    outline: 1px solid white;
+}
+
+.dynamicCard{
+    background-color: white;
+    color: var(--main-ctc-color);
+    padding: 1px;
+    text-align: center;
+    display: none;
+    border-radius: 10%;
+    padding: 5px;
+}
 main > form{
     align-self: flex-end;
     margin-right: 2em;
     outline: solid 1px var(--main-ctc-color);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    padding: 2em;
+    padding: 4em;
     background-color:var(--main-ctc-color);
     color: white;
 }

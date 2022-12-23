@@ -22,6 +22,8 @@ var sortStyling = document.querySelector(".sortHidden");
 var sortButton = document.querySelector("#sort-button");
 var filterStyling = document.querySelector(".filterHidden");
 var filterButton = document.querySelector("#filter-button");
+var dynamicFill = document.querySelectorAll(".dynamicCard");
+var searchForm = document.querySelector("#search-form");
 
 const media1 = window.matchMedia('(max-width: 980px)');
 const media2 = window.matchMedia('(min-width: 980px)');
@@ -92,6 +94,55 @@ function initMap() {
   }
 ;
 
+const input = document.querySelector("#big-search-bar");
+
+
+
+const defaultBounds = {
+  north: 54,
+  south: 51,
+  east: 7.5,
+  west: 3,
+};
+const options = {
+  bounds: defaultBounds,
+  componentRestrictions: { country: "nl" },
+  fields: ["address_components", "geometry", "icon", "name"],
+  strictBounds: false,
+};
+const autocomplete = new google.maps.places.Autocomplete(input, options);
+google.maps.event.addListener(autocomplete, 'place_changed', function () {
+  const place = autocomplete.getPlace();
+
+  markers = [];
+
+  const icon = {
+    url: place.icon,
+    size: new google.maps.Size(71, 71),
+    origin: new google.maps.Point(0, 0),
+    anchor: new google.maps.Point(17, 34),
+    scaledSize: new google.maps.Size(25, 25),
+  };
+
+  markers.push(
+    new google.maps.Marker({
+      map,
+      icon,
+      title: place.name,
+      position: place.geometry.location,
+    })
+  );
+  map.setCenter(place.geometry.location);
+  map.setZoom(12);
+  if(listAnimation.classList.contains("animation-hidden")){
+
+  }
+  else{
+    listAnimation.classList.toggle("animation-hidden");
+    listAnimation.classList.remove("animation-visible");
+    buttonSlide.classList.toggle("side-out-flip");
+  };
+});
 
 
 }
@@ -163,6 +214,7 @@ async function setMarkers(map){
           title: smartzones[i].location,
         });
 
+        
         const infoWindow = new google.maps.InfoWindow();
 
     
@@ -248,12 +300,21 @@ function depopulate(){
   }
 }
 
+function depopDynamic(){
+  for (let i = 0; i < dynamicFill.length; i++){
+    dynamicFill[i].textContent = " ";
+    dynamicFill[i].style.display = "none";
+  }
+}
 populate(smartzones);
 
 function initSort(){
 
-
   sortSize.addEventListener("click", () =>{
+    sortSize.classList.toggle("sizeActive");
+    sortUse.classList.remove("useActive");
+    sortFunc.classList.remove("funcActive");
+    sortLoc.classList.remove("locActive");
     smartzones.sort((a, b) => {
   const sizeA = a.size.toUpperCase(); 
   const sizeB = b.size.toUpperCase(); 
@@ -270,6 +331,10 @@ function initSort(){
   });
 
   sortUse.addEventListener("click", () =>{
+    sortUse.classList.toggle("useActive");
+    sortSize.classList.remove("sizeActive");
+    sortFunc.classList.remove("funcActive");
+    sortLoc.classList.remove("locActive");
     smartzones.sort((a, b) => {
   const useA = a.utilization.toUpperCase(); 
   const useB = b.utilization.toUpperCase(); 
@@ -286,6 +351,10 @@ function initSort(){
   });
 
   sortFunc.addEventListener("click", () =>{
+    sortFunc.classList.toggle("funcActive");
+    sortSize.classList.remove("sizeActive");
+    sortUse.classList.remove("useActive");
+    sortLoc.classList.remove("locActive");
     smartzones.sort((a, b) => {
   const funcA = a.function.toUpperCase();
   const funcB = b.function.toUpperCase();
@@ -302,6 +371,10 @@ function initSort(){
   });
 
   sortLoc.addEventListener("click", () =>{
+    sortLoc.classList.toggle("locActive");
+    sortSize.classList.remove("sizeActive");
+    sortUse.classList.remove("useActive");
+    sortFunc.classList.remove("funcActive");
     smartzones.sort((a, b) => {
   const locA = a.town.toUpperCase();
   const locB = b.town.toUpperCase();
@@ -318,7 +391,6 @@ function initSort(){
   });
 }
 initSort();
-
 function filterTest(){
   
   for (let i = 0; i < checkboxes.length; i++){
@@ -327,37 +399,44 @@ function filterTest(){
         let locCheck = smartzones.filter(location => location.town == checkboxes[i].value);
         depopulate();
         populate(locCheck);
-        buttonPopulate(locCheck);
+        depopDynamic();
+        dynamicFill[i].textContent = checkboxes[i].value;
+        dynamicFill[i].style.display = "inline";
       }
       else if(checkboxes[i].name == "filterFunc" && checkboxes[i].checked){
         let funcCheck = smartzones.filter(functionality => functionality.function == checkboxes[i].value);
         console.log(checkboxes[i].value)
         depopulate();
         populate(funcCheck);
+        depopDynamic();
+        dynamicFill[i].textContent = checkboxes[i].value;
+        dynamicFill[i].style.display = "inline";
       }
       else if(checkboxes[i].name == "filterGrootte" && checkboxes[i].checked){
         let sizeCheck = smartzones.filter(area => area.size == checkboxes[i].value);
         depopulate();
         populate(sizeCheck);
+        depopDynamic();
+        dynamicFill[i].textContent = checkboxes[i].value;
+        dynamicFill[i].style.display = "inline";
       }
       else if(checkboxes[i].name == "filterGebruik" && checkboxes[i].checked){
         let usageCheck = smartzones.filter(usage => parseInt(usage.utilization) < parseInt(checkboxes[i].value));
-        console.log(checkboxes[i].value)
         depopulate();
         populate(usageCheck);
+        depopDynamic();
+        dynamicFill[i].textContent = checkboxes[i].value;
+        dynamicFill[i].style.display = "inline";
       }
       else{
         depopulate();
         populate(smartzones);
+        depopDynamic();
       }
-
     });
-  
   }
-  
   }
   filterTest();
-
 }
   
 
@@ -410,7 +489,11 @@ function filterShow(){
 
 
 
+function preventSubmit(event){
+  event.preventDefault();
+};
 
+searchForm.addEventListener('submit', preventSubmit);
 
 window.initMap = initMap;
 buttonSlide.addEventListener("click", classSlide);
